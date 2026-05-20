@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ThePaywall — Get Paid for Your Content</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --black:#0a0a0a;--white:#fafafa;--accent:#c8f135;--accent-dark:#9ec200;
+    --gray1:#f5f5f0;--gray2:#e8e8e0;--gray3:#a0a090;--gray4:#404038;
+    --radius:12px;--radius-lg:20px
+  }
+  body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 2.5rem;border-bottom:1px solid #1a1a1a;position:sticky;top:0;background:rgba(10,10,10,0.9);backdrop-filter:blur(12px);z-index:100}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-0.02em}
+  .logo span{color:var(--accent)}
+  nav a{color:var(--gray3);text-decoration:none;font-size:0.9rem;transition:color 0.2s}
+  nav a:hover{color:var(--white)}
+  .nav-links{display:flex;gap:2rem;align-items:center}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:0.6rem 1.4rem;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.2s;border:none}
+  .btn-accent{background:var(--accent);color:var(--black)}
+  .btn-accent:hover{background:var(--accent-dark);transform:translateY(-1px)}
+  .btn-outline{background:transparent;color:var(--white);border:1px solid #333}
+  .btn-outline:hover{border-color:#666;background:#111}
+  .btn-lg{padding:0.9rem 2rem;font-size:1rem}
+
+  hero{display:block;padding:7rem 2.5rem 5rem;max-width:900px;margin:0 auto;text-align:center}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:#111;border:1px solid #222;border-radius:99px;padding:6px 16px;font-size:0.8rem;color:var(--gray3);margin-bottom:2rem}
+  .hero-badge span{width:6px;height:6px;background:var(--accent);border-radius:50%;display:inline-block}
+  h1{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,6vw,5rem);font-weight:800;line-height:1.05;letter-spacing:-0.03em;margin-bottom:1.5rem}
+  h1 em{color:var(--accent);font-style:normal}
+  .hero-sub{font-size:1.15rem;color:var(--gray3);line-height:1.7;max-width:580px;margin:0 auto 2.5rem}
+  .hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+  .hero-stats{display:flex;gap:3rem;justify-content:center;margin-top:4rem;padding-top:4rem;border-top:1px solid #1a1a1a;flex-wrap:wrap}
+  .stat-item{text-align:center}
+  .stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:700;color:var(--accent)}
+  .stat-label{font-size:0.85rem;color:var(--gray3);margin-top:4px}
+
+  .section{padding:5rem 2.5rem;max-width:1100px;margin:0 auto}
+  .section-label{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+  .section-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:1rem}
+  .section-sub{color:var(--gray3);font-size:1.05rem;line-height:1.7;max-width:520px;margin-bottom:3rem}
+
+  .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+  .feature-card{background:#0f0f0f;border:1px solid #1a1a1a;border-radius:var(--radius-lg);padding:1.75rem;transition:border-color 0.2s}
+  .feature-card:hover{border-color:#333}
+  .feature-icon{width:44px;height:44px;background:#1a1a1a;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;font-size:1.3rem}
+  .feature-card h3{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:600;margin-bottom:0.6rem}
+  .feature-card p{color:var(--gray3);font-size:0.9rem;line-height:1.6}
+
+  .how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;counter-reset:steps}
+  .step{background:#0f0f0f;border:1px solid #1a1a1a;border-radius:var(--radius-lg);padding:1.75rem;position:relative;counter-increment:steps}
+  .step::before{content:counter(steps);font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;color:#1a1a1a;position:absolute;top:1.5rem;right:1.5rem;line-height:1}
+  .step h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:600;margin-bottom:0.5rem}
+  .step p{color:var(--gray3);font-size:0.88rem;line-height:1.6}
+
+  .crypto-grid{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem}
+  .crypto-chip{display:flex;align-items:center;gap:8px;background:#0f0f0f;border:1px solid #1a1a1a;border-radius:99px;padding:10px 18px;font-size:0.9rem}
+  .crypto-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700}
+  .btc{background:#f7931a22;color:#f7931a}
+  .eth{background:#627eea22;color:#627eea}
+  .sol{background:#9945ff22;color:#9945ff}
+  .xrp{background:#00aae422;color:#00aae4}
+  .usdt{background:#26a17b22;color:#26a17b}
+
+  .cta-section{background:#0f0f0f;border:1px solid #1a1a1a;border-radius:var(--radius-lg);padding:4rem;text-align:center;margin:2rem 0}
+  .cta-section h2{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:700;margin-bottom:1rem;letter-spacing:-0.02em}
+  .cta-section p{color:var(--gray3);margin-bottom:2rem;font-size:1rem}
+
+  footer{border-top:1px solid #1a1a1a;padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+  footer p{color:var(--gray3);font-size:0.85rem}
+  .footer-links{display:flex;gap:1.5rem}
+  .footer-links a{color:var(--gray3);text-decoration:none;font-size:0.85rem;transition:color 0.2s}
+  .footer-links a:hover{color:var(--white)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">The<span>Paywall</span></div>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#features">Features</a>
+    <a href="pages/login.html">Sign in</a>
+    <a href="pages/register.html" class="btn btn-accent">Start selling</a>
+  </div>
+</nav>
+
+<hero>
+  <div class="hero-badge"><span></span> No banks. No ID. Crypto only.</div>
+  <h1>Sell your content.<br><em>Keep everything.</em></h1>
+  <p class="hero-sub">Put any link, photo, or file behind a paywall. Your buyers pay in crypto — Bitcoin, ETH, Solana, XRP or USDT — and the content unlocks instantly.</p>
+  <div class="hero-actions">
+    <a href="pages/register.html" class="btn btn-accent btn-lg">Create your page</a>
+    <a href="#how" class="btn btn-outline btn-lg">See how it works</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item"><div class="stat-num">0%</div><div class="stat-label">Platform fees</div></div>
+    <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">Cryptos accepted</div></div>
+    <div class="stat-item"><div class="stat-num">~1min</div><div class="stat-label">Setup time</div></div>
+    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Anonymous buyers</div></div>
+  </div>
+</hero>
+
+<div class="section" id="how">
+  <div class="section-label">How it works</div>
+  <h2 class="section-title">Up and running in minutes</h2>
+  <p class="section-sub">Create a page, add your content, set a price, share your link. That's it.</p>
+  <div class="how-grid">
+    <div class="step">
+      <h3>Create your page</h3>
+      <p>Sign up, set your creator name, add a profile photo and bio. Your public page is live instantly.</p>
+    </div>
+    <div class="step">
+      <h3>Add your content</h3>
+      <p>Upload an image, paste a link (Snapchat, Drive, Telegram) or a file. Set a price in USD — we show the crypto equivalent.</p>
+    </div>
+    <div class="step">
+      <h3>Buyer pays in crypto</h3>
+      <p>They send the exact amount to your wallet. Payment is detected automatically within seconds.</p>
+    </div>
+    <div class="step">
+      <h3>Content unlocks</h3>
+      <p>The link or image reveals itself on the page. No accounts needed for buyers — totally anonymous.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="features">
+  <div class="section-label">Features</div>
+  <h2 class="section-title">Everything you need</h2>
+  <p class="section-sub">Built for creators who want full control without the hassle of traditional payment processors.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Creator dashboard</h3>
+      <p>See every visit, every payment, and your total earnings across all your content in real time.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>Content gating</h3>
+      <p>Images are blurred, links are hidden. Content only reveals after confirmed crypto payment.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">₿</div>
+      <h3>5 cryptos supported</h3>
+      <p>Bitcoin, Ethereum, Solana, XRP, and USDT on Tron. Payments go straight to your wallet.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌍</div>
+      <h3>Works from SA</h3>
+      <p>No Stripe, no PayPal, no bank integration. Crypto means it works anywhere in the world.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✅</div>
+      <h3>18+ verification</h3>
+      <p>Optional ID upload and digital declaration for creators posting adult content. Keeps you legally protected.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔗</div>
+      <h3>Public creator page</h3>
+      <p>Share one link. Buyers see all your locked content in one place. Clean, fast, mobile friendly.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Payments</div>
+  <h2 class="section-title">Crypto you can accept</h2>
+  <p class="section-sub">Payments go directly to your own wallet address. We never hold your funds.</p>
+  <div class="crypto-grid">
+    <div class="crypto-chip"><div class="crypto-dot btc">₿</div> Bitcoin</div>
+    <div class="crypto-chip"><div class="crypto-dot eth">Ξ</div> Ethereum</div>
+    <div class="crypto-chip"><div class="crypto-dot sol">◎</div> Solana</div><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account — ThePaywall</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--black:#0a0a0a;--white:#fafafa;--accent:#c8f135;--gray1:#f5f5f0;--gray2:#e8e8e0;--gray3:#a0a090;--gray4:#404038;--radius:12px}
+  body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 2.5rem;border-bottom:1px solid #1a1a1a}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;text-decoration:none;color:var(--white)}
+  .logo span{color:var(--accent)}
+  .main{flex:1;display:flex;align-items:center;justify-content:center;padding:3rem 1.5rem}
+  .card{background:#0f0f0f;border:1px solid #1a1a1a;border-radius:20px;padding:2.5rem;width:100%;max-width:460px}
+  h1{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:0.4rem}
+  .sub{color:var(--gray3);font-size:0.9rem;margin-bottom:2rem}
+  label{display:block;font-size:0.85rem;color:var(--gray3);margin-bottom:6px}
+  input,select{width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:var(--radius);padding:12px 14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none;transition:border-color 0.2s;margin-bottom:1.25rem}
+  input:focus,select:focus{border-color:#444}
+  input::placeholder{color:#444}
+  .btn{width:100%;background:var(--accent);color:var(--black);border:none;border-radius:var(--radius);padding:13px;font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.2s;margin-top:0.5rem}
+  .btn:hover{background:#b5da20;transform:translateY(-1px)}
+  .divider{display:flex;align-items:center;gap:12px;margin:1.5rem 0;color:var(--gray3);font-size:0.8rem}
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:#1a1a1a}
+  .login-link{text-align:center;margin-top:1.5rem;font-size:0.9rem;color:var(--gray3)}
+  .login-link a{color:var(--accent);text-decoration:none}
+  .field-group{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .terms-note{font-size:0.78rem;color:var(--gray3);text-align:center;margin-top:1rem;line-height:1.5}
+  .terms-note a{color:var(--gray3);text-decoration:underline}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="logo">The<span>Paywall</span></a>
+  <a href="login.html" style="color:var(--gray3);text-decoration:none;font-size:0.9rem">Already have an account? <span style="color:var(--accent)">Sign in</span></a>
+</nav>
+<div class="main">
+  <div class="card">
+    <h1>Create your page</h1>
+    <p class="sub">Start selling in under a minute.</p>
+    <div class="field-group">
+      <div>
+        <label>First name</label>
+        <input type="text" placeholder="Sipho">
+      </div>
+      <div>
+        <label>Last name</label>
+        <input type="text" placeholder="Dlamini">
+      </div>
+    </div>
+    <label>Username (your public page URL)</label>
+    <input type="text" placeholder="sipho" style="margin-bottom:0.4rem">
+    <div style="font-size:0.78rem;color:var(--gray3);margin-bottom:1.25rem">thepaywall.co.za/<span id="preview" style="color:var(--accent)">sipho</span></div>
+    <label>Email address</label>
+    <input type="email" placeholder="you@email.com">
+    <label>Password</label>
+    <input type="password" placeholder="At least 8 characters">
+    <button class="btn" onclick="window.location.href='dashboard.html'">Create account →</button>
+    <p class="terms-note">By creating an account you agree to our <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>.</p>
+    <div class="login-link">Already have an account? <a href="login.html">Sign in</a></div>
+  </div>
+</div>
+<script>
+  const u=document.querySelector('input[placeholder="sipho"]');
+  const p=document.getElementById('preview');
+  u.addEventListener('input',()=>{p.textContent=u.value||'sipho'});
+</script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>18+ Compliance — ThePaywall</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--black:#0a0a0a;--white:#fafafa;--accent:#c8f135;--gray3:#a0a090;--radius:12px}
+  body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh}
+  nav{display:flex;align-items:center;padding:1.2rem 2rem;border-bottom:1px solid #1a1a1a}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;text-decoration:none;color:var(--white)}
+  .logo span{color:var(--accent)}
+  .page{max-width:720px;margin:0 auto;padding:4rem 2rem}
+  h1{font-family:'Syne',sans-serif;font-size:2rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:0.5rem}
+  .date{color:var(--gray3);font-size:0.85rem;margin-bottom:3rem}
+  h2{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:600;margin:2rem 0 0.75rem}
+  p{color:var(--gray3);font-size:0.92rem;line-height:1.8;margin-bottom:1rem}
+  ul{color:var(--gray3);font-size:0.92rem;line-height:1.8;padding-left:1.5rem;margin-bottom:1rem}
+  li{margin-bottom:0.4rem}
+  .highlight{background:#1a1a1a;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;padding:1rem 1.25rem;margin:1.5rem 0}
+  .highlight p{color:var(--white);margin:0}
+  .step-card{background:#0f0f0f;border:1px solid #1a1a1a;border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem;display:flex;gap:1rem;align-items:flex-start}
+  .step-num{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--accent);line-height:1;flex-shrink:0}
+  .step-body h3{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:600;margin-bottom:0.3rem}
+  .step-body p{margin:0;font-size:0.88rem}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="logo">The<span>Paywall</span></a>
+</nav>
+<div class="page">
+  <h1>18+ Content Compliance</h1>
+  <div class="date">ThePaywall age verification and consent policy</div>
+
+  <div class="highlight">
+    <p>Posting adult content without completing verification is prohibited. This process protects you legally and ensures all content on the platform is consensual and involves adults only.</p>
+  </div>
+
+  <h2>Why we require this</h2>
+  <p>Under the South African Films and Publications Act (as amended), distributing sexual content involving persons under 18 is a serious criminal offence. Our verification process creates a record that protects you as a creator if your content is ever investigated.</p>
+  <p>You keep private records — buyers never see your ID or personal details.</p>
+
+  <h2>The verification process</h2>
+  <div class="step-card">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Submit your ID</h3>
+      <p>Upload a photo or scan of your South African ID, passport, or driver's licence. This confirms you are 18+ and establishes your identity as the account holder.</p>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Sign the declaration</h3>
+      <p>You digitally sign a declaration confirming: (a) you are 18+, (b) all persons in your content are 18+, and (c) all persons have given consent to the content being distributed.</p>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Keep records of co-performers</h3>
+      <p>If your content features other people, you must hold copies of their IDs and written consent. You do not upload these to us — you keep them privately in case verification is ever required.</p>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Approval and posting</h3>
+      <p>Once verified, your account is approved for 18+ content. Verification is reviewed within 24 hours.</p>
+    </div>
+  </div>
+
+  <h2>What we store</h2>
+  <ul>
+    <li>Your ID document — encrypted, stored securely, never displayed publicly</li>
+    <li>Your signed declaration with timestamp</li>
+    <li>Your date of birth for age confirmation</li>
+  </ul>
+
+  <h2>Zero tolerance</h2>
+  <p>Any content involving minors will result in immediate account termination, permanent ban, and reporting to the South African Police Service and the Film and Publication Board. There are no exceptions.</p>
+
+  <h2>Questions</h2>
+  <p>For compliance questions: compliance@thepaywall.co.za</p>
+</div>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — ThePaywall</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--black:#0a0a0a;--white:#fafafa;--accent:#c8f135;--gray3:#a0a090;--radius:12px}
+  body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2rem;border-bottom:1px solid #1a1a1a}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;text-decoration:none;color:var(--white)}
+  .logo span{color:var(--accent)}
+  .page{max-width:720px;margin:0 auto;padding:4rem 2rem}
+  h1{font-family:'Syne',sans-serif;font-size:2rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:0.5rem}
+  .date{color:var(--gray3);font-size:0.85rem;margin-bottom:3rem}
+  h2{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:600;margin:2rem 0 0.75rem}
+  p{color:var(--gray3);font-size:0.92rem;line-height:1.8;margin-bottom:1rem}
+  ul{color:var(--gray3);font-size:0.92rem;line-height:1.8;padding-left:1.5rem;margin-bottom:1rem}
+  li{margin-bottom:0.4rem}
+  .highlight{background:#1a1a1a;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;padding:1rem 1.25rem;margin:1.5rem 0}
+  .highlight p{color:var(--white);margin:0}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="logo">The<span>Paywall</span></a>
+</nav>
+<div class="page">
+  <h1>Terms of Service</h1>
+  <div class="date">Last updated: May 2025</div>
+
+  <div class="highlight">
+    <p>ThePaywall is a platform for creators to sell digital content. All transactions are between creators and buyers. ThePaywall does not control, produce, or take responsibility for content posted by creators.</p>
+  </div>
+
+  <h2>1. The platform</h2>
+  <p>ThePaywall provides infrastructure for creators to gate content behind crypto payments. We are a tool, not a content publisher. Creators are solely responsible for what they post.</p>
+
+  <h2>2. Creator responsibilities</h2>
+  <p>By creating an account, you agree that:</p>
+  <ul>
+    <li>All content you post is legal under South African law and the laws of your jurisdiction</li>
+    <li>You own the rights to all content you post, or have explicit permission from rights holders</li>
+    <li>You will not post content involving minors in any sexual or exploitative context — this is a criminal offence and will result in immediate account termination and reporting to authorities</li>
+    <li>For 18+ content, you have completed our verification process and all persons depicted are confirmed adults who have consented</li>
+    <li>You are responsible for declaring income earned through the platform to relevant tax authorities</li>
+  </ul>
+
+  <h2>3. Prohibited content</h2>
+  <p>The following content is strictly prohibited and will result in immediate termination:</p>
+  <ul>
+    <li>Any sexual content involving persons under 18</li>
+    <li>Non-consensual intimate imagery</li>
+    <li>Content that facilitates violence, fraud, or other illegal activity</li>
+    <li>Content that violates third-party intellectual property rights</li>
+    <li>Spam or misleading content</li>
+  </ul>
+
+  <h2>4. Payments and crypto</h2>
+  <p>All payments are processed directly between buyer and creator via cryptocurrency. ThePaywall does not hold or process funds. Transactions are irreversible. We are not responsible for lost funds due to incorrect wallet addresses.</p>
+
+  <h2>5. Buyer acknowledgement</h2>
+  <p>Buyers acknowledge that content is user-generated and has not been reviewed by ThePaywall. Buyers access content at their own discretion. Payments are final — no refunds.</p>
+
+  <h2>6. Limitation of liability</h2>
+  <p>ThePaywall is provided as-is. We accept no liability for content posted by creators, disputes between creators and buyers, cryptocurrency transaction failures, or loss of earnings due to platform downtime.</p>
+
+  <h2>7. Governing law</h2>
+  <p>These terms are governed by the laws of the Republic of South Africa, including the Films and Publications Act and the Electronic Communications and Transactions Act.</p>
+
+  <h2>Contact</h2>
+  <p>For legal matters or abuse reports: legal@thepaywall.co.za</p>
+</div>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>@sipho — ThePaywall</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--black:#0a0a0a;--white:#fafafa;--accent:#c8f135;--gray3:#a0a090;--gray4:#404038;--radius:12px;--radius-lg:20px}
+  body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2rem;border-bottom:1px solid #1a1a1a}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;text-decoration:none;color:var(--white)}
+  .logo span{color:var(--accent)}
+  .page{max-width:680px;margin:0 auto;padding:3rem 1.5rem}
+  .profile{text-align:center;margin-bottom:3rem}
+  .avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#88a800);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--black);margin:0 auto 1rem}
+  .profile h1{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:0.25rem}
+  .profile .handle{color:var(--gray3);font-size:0.9rem;margin-bottom:0.75rem}
+  .profile .bio{color:var(--gray3);font-size:0.9rem;line-height:1.6;max-width:380px;margin:0 auto}
+  .profile-stats{display:flex;gap:2rem;justify-content:center;margin-top:1.25rem}
+  .pstat{text-align:center}
+  .pstat-num{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700}
+  .pstat-label{font-size:0.72rem;color:var(--gray3)}
+  .items-grid{display:flex;flex-direction:column;gap:1rem}
+  .item-card{background:#0f0f0f;border:1px solid #1a1a1a;border-radius:var(--radius-lg);overflow:hidden;transition:border-color 0.2s}
+  .item-card:hover{border-color:#333}
+  .item-preview{height:160px;background:#111;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .item-preview.blurred{filter:blur(16px);transform:scale(1.05)}
+  .blur-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.5);backdrop-filter:blur(2px)}
+  .lock-badge{background:rgba(10,10,10,0.9);border:1px solid #333;border-radius:99px;padding:8px 18px;display:flex;align-items:center;gap:8px;font-size:0.85rem;font-weight:500}
+  .item-body{padding:1.25rem 1.5rem}
+  .item-type{font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray3);margin-bottom:0.4rem}
+  .item-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:600;margin-bottom:0.3rem}
+  .item-desc{font-size:0.85rem;color:var(--gray3);margin-bottom:1rem}
+  .item-footer{display:flex;align-items:center;justify-content:space-between}
+  .item-price{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;color:var(--accent)}
+  .item-meta{font-size:0.78rem;color:var(--gray3)}
+  .btn-buy{background:var(--accent);color:var(--black);border:none;border-radius:var(--radius);padding:10px 22px;font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.2s}
+  .btn-buy:hover{background:#b5da20;transform:translateY(-1px)}
+  .badge-18{display:inline-flex;align-items:center;padding:2px 8px;border-radius:99px;font-size:0.68rem;font-weight:700;background:#f7292922;color:#f87171;margin-left:8px}
+
+  /* Payment modal */
+  .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);z-index:200;align-items:center;justify-content:center;padding:1rem}
+  .modal.open{display:flex}
+  .modal-box{background:#111;border:1px solid #2a2a2a;border-radius:var(--radius-lg);padding:2rem;width:100%;max-width:440px}
+  .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+  .modal-title{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700}
+  .close-btn{background:none;border:none;color:var(--gray3);font-size:1.4rem;cursor:pointer;line-height:1}
+  .price-display{background:#0a0a0a;border:1px solid #1a1a1a;border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.25rem;text-align:center}
+  .price-usd{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--accent)}
+  .price-label{font-size:0.8rem;color:var(--gray3);margin-top:2px}
+  .crypto-tabs{display:flex;gap:6px;margin-bottom:1.25rem;flex-wrap:wrap}
+  .ctab{padding:7px 14px;border-radius:99px;border:1px solid #2a2a2a;background:transparent;color:var(--gray3);font-size:0.8rem;cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif}
+  .ctab.active{border-color:var(--accent);color:var(--white);background:#1a1a1a}
+  .wallet-section{background:#0a0a0a;border:1px solid #1a1a1a;border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem}
+  .wallet-section-label{font-size:0.75rem;color:var(--gray3);margin-bottom:0.5rem}
+  .wallet-amount{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:0.75rem}
+  .wallet-addr-box{background:#111;border:1px solid #1a1a1a;border-radius:8px;padding:10px 12px;font-family:monospace;font-size:0.75rem;word-break:break-all;color:var(--gray3);cursor:pointer;transition:background 0.15s;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+  .wallet-addr-box:hover{background:#1a1a1a}
+  .copy-hint{font-size:0.7rem;color:var(--gray4);flex-shrink:0;margin-top:2px}
+  .status-area{text-align:center;padding:1rem 0}
+  .status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#fbbf24;margin-right:6px;animation:pulse 1.5s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+  .status-text{font-size:0.85rem;color:var(--gray3)}
+  .success-state{display:none;text-align:center;padding:1.5rem 0}
+  .success-icon{font-size:3rem;margin-bottom:1rem}
+  .success-title{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:0.5rem;color:#4ade80}
+  .revealed-content{background:#0a0a0a;border:1px solid #1a1a1a;border-radius:var(--radius);padding:1.25rem;margin-top:1rem;word-break:break-all;font-size:0.9rem}
+  .revealed-content a{color:var(--accent);text-decoration:none}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="logo">The<span>Paywall</span></a>
+  <a href="register.html" style="font-size:0.85rem;color:var(--gray3);text-decoration:none">Sell your own content →</a>
+</nav>
+
+<div class="page">
+  <div class="profile">
+    <div class="avatar">SD</div>
+    <h1>Sipho Dlamini</h1>
+    <div class="handle">@sipho · thepaywall.co.za/sipho</div>
+    <div class="bio">Cape Town based creator. Exclusive content, private links and more. All unlocked with crypto.</div>
+    <div class="profile-stats">
+      <div class="pstat"><div class="pstat-num">4</div><div class="pstat-label">Items</div></div>
+      <div class="pstat"><div class="pstat-num">1.4k</div><div class="pstat-label">Visitors</div></div>
+      <div class="pstat"><div class="pstat-num">47</div><div class="pstat-label">Sales</div></div>
+    </div>
+  </div>
+
+  <div class="items-grid" id="items"></div>
+</div>
+
+<!-- Payment modal -->
+<div class="modal" id="pay-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">Unlock content</div>
+      <button class="close-btn" onclick="closeModal()">×</button>
+    </div>
+
+    <div id="pay-section">
+      <div class="price-display">
+        <div class="price-usd" id="modal-price">$10.00</div>
+        <div class="price-label">Pay with crypto — content unlocks automatically</div>
+      </div>
+
+      <div class="crypto-tabs" id="crypto-tabs">
+        <button class="ctab active" onclick="selectCrypto(this,'BTC')">₿ Bitcoin</button>
+        <button class="ctab" onclick="selectCrypto(this,'ETH')">Ξ Ethereum</button>
+        <button class="ctab" onclick="selectCrypto(this,'SOL')">◎ Solana</button>
+        <button class="ctab" onclick="selectCrypto(this,'XRP')">✕ XRP</button>
+        <button class="ctab" onclick="selectCrypto(this,'USDT')">₮ USDT</button>
+      </div>
+
+      <div class="wallet-section">
+        <div class="wallet-section-label">Send exactly this amount:</div>
+        <div class="wallet-amount" id="crypto-amount">0.00012 BTC</div>
+        <div class="wallet-section-label">To this address:</div>
+        <div class="wallet-addr-box" onclick="copyAddr()" id="addr-box">
+          <span id="wallet-addr">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</span>
+          <span class="copy-hint">Copy</span>
+        </div>
+      </div>
+
+      <div class="status-area">
+        <span class="status-dot"></span>
+        <span class="status-text">Waiting for payment… (demo: <a href="#" onclick="simulatePayment();return false;" style="color:var(--accent)">simulate payment</a>)</span>
+      </div>
+    </div>
+
+    <div class="success-state" id="success-section">
+      <div class="success-icon">✅</div>
+      <div class="success-title">Payment confirmed!</div>
+      <p style="color:var(--gray3);font-size:0.88rem;margin-bottom:0.5rem">Your content has been unlocked.</p>
+      <div class="revealed-content" id="revealed-content"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const items=[
+  {id:1,type:'Link',title:'Private Snapchat',desc:'Add me on Snap for exclusive daily content.',price:10,sales:18,emoji:'👻',adult:false,content:'https://snapchat.com/add/siphocreates'},
+  {id:2,type:'Link',title:'Google Drive — May Pack',desc:'Full folder of exclusive content from this month.',price:8.2,sales:14,emoji:'📁',adult:false,content:'https://drive.google.com/drive/folders/example'},
+  {id:3,type:'Image',title:'Exclusive photo set',desc:'Limited release. Only available here.',price:15,sales:11,emoji:'🖼',adult:true,content:'https://drive.google.com/drive/folders/example-18'},
+  {id:4,type:'Link',title:'Telegram VIP group',desc:'Join my private Telegram for daily updates.',price:5,sales:4,emoji:'✈️',adult:false,content:'https://t.me/+examplegrouplink'},
+];
+
+const rates={BTC:0.000012,ETH:0.00034,SOL:0.092,XRP:14.5,USDT:1};
+let currentItem=null,currentCrypto='BTC';
+
+function renderItems(){
+  document.getElementById('items').innerHTML=items.map(item=>`
+    <div class="item-card">
+      <div class="item-preview">
+        <div style="font-size:4rem;opacity:0.15">${item.emoji}</div>
+        <div class="blur-overlay">
+          <div class="lock-badge">🔒 Locked · Pay to unlock</div>
+        </div>
+      </div>
+      <div class="item-body">
+        <div class="item-type">${item.type}${item.adult?'<span class="badge-18">18+</span>':''}</div>
+        <div class="item-title">${item.title}</div>
+        <div class="item-desc">${item.desc}</div>
+        <div class="item-footer">
+          <div>
+            <div class="item-price">$${item.price.toFixed(2)}</div>
+            <div class="item-meta">${item.sales} purchases</div>
+          </div>
+          <button class="btn-buy" onclick="openModal(${item.id})">Unlock →</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openModal(id){
+  currentItem=items.find(i=>i.id===id);
+  document.getElementById('modal-title').textContent='Unlock: '+currentItem.title;
+  document.getElementById('modal-price').textContent='$'+currentItem.price.toFixed(2);
+  document.getElementById('pay-section').style.display='block';
+  document.getElementById('success-section').style.display='none';
+  selectCryptoByName('BTC');
+  document.getElementById('pay-modal').classList.add('open');
+}
+
+function closeModal(){document.getElementById('pay-modal').classList.remove('open')}
+
+const addrs={BTC:'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',ETH:'0x71C7656EC7ab88b098defB751B7401B5f6d8976F',SOL:'7EcDhSYGxXyscszYEp35KHN8vvw3svAuLKTzXwCFLtV',XRP:'rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh',USDT:'TN3W4H6rK2ce4vX9YnFQHwKx7eNwnk1fX'};
+
+function selectCrypto(el,sym){
+  document.querySelectorAll('.ctab').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  currentCrypto=sym;
+  const amt=(currentItem.price*rates[sym]);
+  const display=amt<0.001?amt.toFixed(6):amt<1?amt.toFixed(4):amt.toFixed(2);
+  document.getElementById('crypto-amount').textContent=display+' '+sym;
+  document.getElementById('wallet-addr').textContent=addrs[sym];
+}
+
+function selectCryptoByName(sym){
+  const tabs=document.querySelectorAll('.ctab');
+  tabs.forEach(t=>{if(t.textContent.includes(sym))selectCrypto(t,sym)});
+  tabs[0].click();
+}
+
+function copyAddr(){
+  navigator.clipboard.writeText(addrs[currentCrypto]).catch(()=>{});
+  const box=document.getElementById('addr-box');
+  box.querySelector('.copy-hint').textContent='Copied!';
+  setTimeout(()=>box.querySelector('.copy-hint').textContent='Copy',1500);
+}
+
+function simulatePayment(){
+  document.getElementById('pay-section').style.display='none';
+  const s=document.getElementById('success-section');
+  s.style.display='block';
+  document.getElementById('revealed-content').innerHTML=`<a href="${currentItem.content}" target="_blank">${currentItem.content} ↗</a>`;
+}
+
+renderItems();
+</script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — ThePaywall</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--black:#0a0a0a;--white:#fafafa;--accent:#c8f135;--gray3:#a0a090;--radius:12px}
+  body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 2.5rem;border-bottom:1px solid #1a1a1a}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;text-decoration:none;color:var(--white)}
+  .logo span{color:var(--accent)}
+  .main{flex:1;display:flex;align-items:center;justify-content:center;padding:3rem 1.5rem}
+  .card{background:#0f0f0f;border:1px solid #1a1a1a;border-radius:20px;padding:2.5rem;width:100%;max-width:420px}
+  h1{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:0.4rem}
+  .sub{color:var(--gray3);font-size:0.9rem;margin-bottom:2rem}
+  label{display:block;font-size:0.85rem;color:var(--gray3);margin-bottom:6px}
+  input{width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:var(--radius);padding:12px 14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none;transition:border-color 0.2s;margin-bottom:1.25rem}
+  input:focus{border-color:#444}
+  input::placeholder{color:#444}
+  .btn{width:100%;background:var(--accent);color:var(--black);border:none;border-radius:var(--radius);padding:13px;font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.2s;margin-top:0.5rem}
+  .btn:hover{background:#b5da20}
+  .signup-link{text-align:center;margin-top:1.5rem;font-size:0.9rem;color:var(--gray3)}
+  .signup-link a{color:var(--accent);text-decoration:none}
+  .forgot{text-align:right;margin-top:-1rem;margin-bottom:1.25rem}
+  .forgot a{font-size:0.8rem;color:var(--gray3);text-decoration:none}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="logo">The<span>Paywall</span></a>
+  <a href="register.html" style="color:var(--gray3);text-decoration:none;font-size:0.9rem">New here? <span style="color:var(--accent)">Create account</span></a>
+</nav>
+<div class="main">
+  <div class="card">
+    <h1>Welcome back</h1>
+    <p class="sub">Sign in to your creator account.</p>
+    <label>Email address</label>
+    <input type="email" placeholder="you@email.com">
+    <label>Password</label>
+    <input type="password" placeholder="Your password">
+    <div class="forgot"><a href="#">Forgot password?</a></div>
+    <button class="btn" onclick="window.location.href='dashboard.html'">Sign in →</button>
+    <div class="signup-link">Don't have an account? <a href="register.html">Create one</a></div>
+  </div>
+</div>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — ThePaywall</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--black:#0a0a0a;--white:#fafafa;--accent:#c8f135;--gray3:#a0a090;--gray4:#404038;--radius:12px;--radius-lg:20px}
+  body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2rem;border-bottom:1px solid #1a1a1a;position:sticky;top:0;background:rgba(10,10,10,0.95);backdrop-filter:blur(12px);z-index:100}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;text-decoration:none;color:var(--white)}
+  .logo span{color:var(--accent)}
+  .nav-right{display:flex;align-items:center;gap:1rem}
+  .avatar{width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--black);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;cursor:pointer}
+  .page{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 61px)}
+  .sidebar{border-right:1px solid #1a1a1a;padding:1.5rem 1rem}
+  .sidebar-section{margin-bottom:0.5rem}
+  .sidebar-label{font-size:0.7rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray4);padding:0 0.75rem;margin-bottom:0.5rem;margin-top:1rem}
+  .sidebar-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--radius);color:var(--gray3);text-decoration:none;font-size:0.88rem;transition:all 0.15s;cursor:pointer}
+  .sidebar-link:hover{background:#111;color:var(--white)}
+  .sidebar-link.active{background:#1a1a1a;color:var(--white)}
+  .sidebar-link .icon{font-size:1rem;width:20px;text-align:center}
+  .content{padding:2rem;overflow-y:auto}
+  .page-title{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:0.3rem}
+  .page-sub{color:var(--gray3);font-size:0.9rem;margin-bottom:2rem}
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem}
+  .stat-card{background:#0f0f0f;border:1px solid #1a1a1a;border-radius:var(--radius-lg);padding:1.25rem}
+  .stat-label{font-size:0.78rem;color:var(--gray3);margin-bottom:0.5rem}
+  .stat-val{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:700;letter-spacing:-0.02em}
+  .stat-val.accent{color:var(--accent)}
+  .stat-change{font-size:0.75rem;color:#4ade80;margin-top:4px}
+  .section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+  .section-header h2{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:600}
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.2s;border:none}
+  .btn-accent{background:var(--accent);color:var(--black)}
+  .btn-accent:hover{background:#b5da20}
+  .btn-outline{background:transparent;color:var(--white);border:1px solid #333}
+  .btn-outline:hover{border-color:#555}
+  .content-list{display:flex;flex-direction:column;gap:0.75rem}
+  .content-item{background:#0f0f0f;border:1px solid #1a1a1a;border-radius:var(--radius-lg);padding:1rem 1.25rem;display:flex;align-items:center;gap:1rem;transition:border-color 0.2s}
+  .content-item:hover{border-color:#333}
+  .content-thumb{width:50px;height:50px;border-radius:var(--radius);background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;overflow:hidden}
+  .content-thumb img{width:100%;height:100%;object-fit:cover;filter:blur(6px)}
+  .content-info{flex:1;min-width:0}
+  .content-title{font-weight:500;font-size:0.9rem;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .content-meta{font-size:0.78rem;color:var(--gray3)}
+  .content-stats{display:flex;gap:1.5rem;text-align:right}
+  .content-stat-val{font-family:'Syne',sans-serif;font-size:1rem;font-weight:600}
+  .content-stat-label{font-size:0.7rem;color:var(--gray3)}
+  .badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:99px;font-size:0.72rem;font-weight:500}
+  .badge-green{background:#4ade8022;color:#4ade80}
+  .badge-yellow{background:#fbbf2422;color:#fbbf24}
+  .badge-gray{background:#33332a;color:var(--gray3)}
+  .actions{display:flex;gap:8px}
+  .icon-btn{background:#1a1a1a;border:none;border-radius:8px;padding:7px 10px;color:var(--gray3);cursor:pointer;font-size:0.85rem;transition:all 0.15s}
+  .icon-btn:hover{background:#252525;color:var(--white)}
+  .chart-area{background:#0f0f0f;border:1px solid #1a1a1a;border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:2rem}
+  .chart-bars{display:flex;align-items:flex-end;gap:6px;height:80px;margin-top:1rem}
+  .bar{flex:1;background:#1a1a1a;border-radius:4px;transition:background 0.2s;cursor:pointer;position:relative}
+  .bar:hover{background:#2a2a2a}
+  .bar.accent{background:var(--accent);opacity:0.8}
+  .bar-label{font-size:0.65rem;color:var(--gray3);text-align:center;margin-top:4px}
+  .empty-state{text-align:center;padding:3rem;color:var(--gray3)}
+  .empty-state .big{font-size:2rem;margin-bottom:0.5rem}
+  .wallet-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+  .wallet-card{background:#0f0f0f;border:1px solid #1a1a1a;border-radius:var(--radius-lg);padding:1.25rem}
+  .wallet-name{display:flex;align-items:center;gap:8px;margin-bottom:0.75rem;font-size:0.85rem;font-weight:500}
+  .crypto-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;flex-shrink:0}
+  .btc{background:#f7931a22;color:#f7931a}.eth{background:#627eea22;color:#627eea}
+  .sol{background:#9945ff22;color:#9945ff}.xrp{background:#00aae422;color:#00aae4}.usdt{background:#26a17b22;color:#26a17b}
+  .wallet-addr{font-size:0.72rem;color:var(--gray3);font-family:monospace;word-break:break-all;background:#1a1a1a;padding:8px 10px;border-radius:8px;cursor:pointer}
+  .wallet-addr:hover{background:#222}
+  input.addr-input{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:8px 10px;color:var(--gray3);font-family:monospace;font-size:0.72rem;width:100%;outline:none;transition:border-color 0.2s}
+  input.addr-input:focus{border-color:#444;color:var(--white)}
+  .tab-bar{display:flex;gap:0;border-bottom:1px solid #1a1a1a;margin-bottom:1.5rem}
+  .tab{padding:10px 16px;font-size:0.88rem;color:var(--gray3);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s}
+  .tab.active{color:var(--white);border-bottom-color:var(--accent)}
+  .tab:hover{color:var(--white)}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="logo">The<span>Paywall</span></a>
+  <div class="nav-right">
+    <a href="creator.html?u=sipho" class="btn btn-outline" style="font-size:0.8rem">View my page ↗</a>
+    <div class="avatar">SD</div>
+  </div>
+</nav>
+
+<div class="page">
+  <aside class="sidebar">
+    <div class="sidebar-link active" onclick="showTab('overview')"><span class="icon">📊</span> Overview</div>
+    <div class="sidebar-link" onclick="showTab('content')"><span class="icon">🔒</span> My content</div>
+    <div class="sidebar-link" onclick="showTab('wallets')"><span class="icon">₿</span> Wallets</div>
+    <div class="sidebar-link" onclick="showTab('verification')"><span class="icon">✅</span> Verification</div>
+    <div class="sidebar-label">Account</div>
+    <div class="sidebar-link" onclick="showTab('settings')"><span class="icon">⚙️</span> Settings</div>
+    <a href="login.html" class="sidebar-link"><span class="icon">🚪</span> Sign out</a>
+  </aside>
+
+  <main class="content" id="main-content">
+    <!-- Overview tab -->
+    <div id="tab-overview">
+      <div class="page-title">Good morning, Sipho 👋</div>
+      <p class="page-sub">Here's how your content is performing.</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total earned</div>
+          <div class="stat-val accent">$248.50</div>
+          <div class="stat-change">↑ $32 this week</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Page visits</div>
+          <div class="stat-val">1,432</div>
+          <div class="stat-change">↑ 12% this week</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Purchases</div>
+          <div class="stat-val">47</div>
+          <div class="stat-change" style="color:var(--gray3)">All time</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Active content</div>
+          <div class="stat-val">4</div>
+          <div class="stat-change" style="color:var(--gray3)">Items live</div>
+        </div>
+      </div>
+
+      <div class="chart-area">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:600">Earnings this month</div>
+          <div style="font-size:0.8rem;color:var(--gray3)">May 2025</div>
+        </div>
+        <div class="chart-bars" id="chart-bars"></div>
+        <div id="chart-labels" style="display:flex;gap:6px"></div>
+      </div>
+
+      <div class="section-header">
+        <h2>Recent payments</h2>
+        <a href="#" style="font-size:0.82rem;color:var(--accent);text-decoration:none">View all →</a>
+      </div>
+      <div class="content-list">
+        <div class="content-item">
+          <div style="width:8px;height:8px;background:#4ade80;border-radius:50%;flex-shrink:0"></div>
+          <div class="content-info">
+            <div class="content-title">Private Snapchat link</div>
+            <div class="content-meta">2 hours ago · 0.00012 BTC</div>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:600;color:#4ade80">+$10.00</div>
+        </div>
+        <div class="content-item">
+          <div style="width:8px;height:8px;background:#4ade80;border-radius:50%;flex-shrink:0"></div>
+          <div class="content-info">
+            <div class="content-title">Google Drive folder</div>
+            <div class="content-meta">5 hours ago · 8.2 USDT</div>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:600;color:#4ade80">+$8.20</div>
+        </div>
+        <div class="content-item">
+          <div style="width:8px;height:8px;background:#4ade80;border-radius:50%;flex-shrink:0"></div>
+          <div class="content-info">
+            <div class="content-title">Exclusive photo set</div>
+            <div class="content-meta">Yesterday · 0.0034 ETH</div>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:600;color:#4ade80">+$15.00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content tab -->
+    <div id="tab-content" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2rem">
+        <div>
+          <div class="page-title">My content</div>
+          <p class="page-sub">Manage your locked items.</p>
+        </div>
+        <button class="btn btn-accent" onclick="showAddModal()">+ Add content</button>
+      </div>
+      <div class="content-list">
+        <div class="content-item">
+          <div class="content-thumb">🔗</div>
+          <div class="content-info">
+            <div class="content-title">Private Snapchat link</div>
+            <div class="content-meta">Link · $10.00 · Added 3 days ago</div>
+          </div>
+          <div class="content-stats">
+            <div><div class="content-stat-val">312</div><div class="content-stat-label">Views</div></div>
+            <div><div class="content-stat-val">18</div><div class="content-stat-label">Sales</div></div>
+            <div><div class="content-stat-val accent" style="color:var(--accent)">$180</div><div class="content-stat-label">Earned</div></div>
+          </div>
+          <span class="badge badge-green">Live</span>
+          <div class="actions">
+            <button class="icon-btn" title="Edit">✏️</button>
+            <button class="icon-btn" title="Delete" style="color:#f87171">🗑</button>
+          </div>
+        </div>
+        <div class="content-item">
+          <div class="content-thumb">📁</div>
+          <div class="content-info">
+            <div class="content-title">Google Drive folder — May pack</div>
+            <div class="content-meta">Link · $8.20 · Added 1 week ago</div>
+          </div>
+          <div class="content-stats">
+            <div><div class="content-stat-val">198</div><div class="content-stat-label">Views</div></div>
+            <div><div class="content-stat-val">14</div><div class="content-stat-label">Sales</div></div>
+            <div><div class="content-stat-val" style="color:var(--accent)">$115</div><div class="content-stat-label">Earned</div></div>
+          </div>
+          <span class="badge badge-green">Live</span>
+          <div class="actions">
+            <button class="icon-btn">✏️</button>
+            <button class="icon-btn" style="color:#f87171">🗑</button>
+          </div>
+        </div>
+        <div class="content-item">
+          <div class="content-thumb" style="background:#111">🖼</div>
+          <div class="content-info">
+            <div class="content-title">Exclusive photo set (18+)</div>
+            <div class="content-meta">Image · $15.00 · Requires age verification</div>
+          </div>
+          <div class="content-stats">
+            <div><div class="content-stat-val">541</div><div class="content-stat-label">Views</div></div>
+            <div><div class="content-stat-val">11</div><div class="content-stat-label">Sales</div></div>
+            <div><div class="content-stat-val" style="color:var(--accent)">$165</div><div class="content-stat-label">Earned</div></div>
+          </div>
+          <span class="badge badge-yellow">18+</span>
+          <div class="actions">
+            <button class="icon-btn">✏️</button>
+            <button class="icon-btn" style="color:#f87171">🗑</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wallets tab -->
+    <div id="tab-wallets" style="display:none">
+      <div class="page-title">Your wallets</div>
+      <p class="page-sub">Payments go directly to these addresses. We never hold your funds.</p>
+      <div class="wallet-grid" id="wallet-grid"></div>
+    </div>
+
+    <!-- Verification tab -->
+    <div id="tab-verification" style="display:none">
+      <div class="page-title">18+ Verification</div>
+      <p class="page-sub">Required to post adult content. Your ID is stored privately and never shown publicly.</p>
+      <div style="background:#0f0f0f;border:1px solid #1a1a1a;border-radius:var(--radius-lg);padding:2rem;max-width:560px">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem">
+          <div style="width:40px;height:40px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:1.2rem">✅</div>
+          <div>
+            <div style="font-weight:500;font-size:0.95rem">ID verification</div>
+            <div style="font-size:0.8rem;color:var(--gray3)">Upload a photo of your ID (SA ID, passport or driver's licence)</div>
+          </div>
+        </div>
+        <label style="display:block;font-size:0.85rem;color:var(--gray3);margin-bottom:6px">Full legal name</label>
+        <input type="text" placeholder="As it appears on your ID" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:var(--radius);padding:11px 14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;margin-bottom:1rem">
+        <label style="display:block;font-size:0.85rem;color:var(--gray3);margin-bottom:6px">Date of birth</label>
+        <input type="date" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:var(--radius);padding:11px 14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;margin-bottom:1rem">
+        <label style="display:block;font-size:0.85rem;color:var(--gray3);margin-bottom:6px">Upload ID document</label>
+        <div style="border:1px dashed #333;border-radius:var(--radius);padding:2rem;text-align:center;margin-bottom:1.25rem;cursor:pointer;transition:border-color 0.2s" onmouseover="this.style.borderColor='#555'" onmouseout="this.style.borderColor='#333'">
+          <div style="font-size:1.5rem;margin-bottom:0.5rem">📎</div>
+          <div style="font-size:0.85rem;color:var(--gray3)">Click to upload or drag and drop</div>
+          <div style="font-size:0.75rem;color:#444;margin-top:4px">JPG, PNG or PDF · Max 5MB</div>
+        </div>
+        <div style="background:#1a1a1a;border-radius:var(--radius);padding:1rem;margin-bottom:1.25rem">
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <input type="checkbox" id="declaration" style="width:auto;margin-top:2px;margin-bottom:0;accent-color:var(--accent)">
+            <label for="declaration" style="font-size:0.82rem;color:var(--gray3);cursor:pointer">I declare that I am 18 years of age or older, that I am the person depicted in any 18+ content I post, or that I have written consent from all persons depicted, and that all persons depicted are 18+.</label>
+          </div>
+        </div>
+        <button class="btn btn-accent" style="width:100%;padding:12px;font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;border:none;border-radius:var(--radius);cursor:pointer">Submit for verification</button>
+        <p style="font-size:0.75rem;color:var(--gray3);text-align:center;margin-top:1rem;line-height:1.5">Your ID is encrypted and stored securely. It is only accessed if legally required.</p>
+      </div>
+    </div>
+
+    <!-- Settings tab -->
+    <div id="tab-settings" style="display:none">
+      <div class="page-title">Settings</div>
+      <p class="page-sub">Manage your profile and account.</p>
+      <div style="background:#0f0f0f;border:1px solid #1a1a1a;border-radius:var(--radius-lg);padding:2rem;max-width:560px">
+        <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:600;margin-bottom:1.25rem">Profile</div>
+        <label style="display:block;font-size:0.85rem;color:var(--gray3);margin-bottom:6px">Display name</label>
+        <input type="text" value="Sipho Dlamini" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:var(--radius);padding:11px 14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;margin-bottom:1rem">
+        <label style="display:block;font-size:0.85rem;color:var(--gray3);margin-bottom:6px">Bio</label>
+        <textarea rows="3" placeholder="Tell buyers about yourself..." style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:var(--radius);padding:11px 14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;resize:none;margin-bottom:1rem"></textarea>
+        <label style="display:block;font-size:0.85rem;color:var(--gray3);margin-bottom:6px">Your page URL</label>
+        <div style="display:flex;align-items:center;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:var(--radius);padding:11px 14px;margin-bottom:1.5rem">
+          <span style="color:var(--gray3);font-size:0.9rem">thepaywall.co.za/</span>
+          <input type="text" value="sipho" style="flex:1;background:transparent;border:none;color:var(--accent);font-size:0.9rem;outline:none;padding:0">
+        </div>
+        <button class="btn btn-accent" style="padding:11px 24px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700">Save changes</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Add content modal -->
+<div id="add-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center">
+  <div style="background:#111;border:1px solid #2a2a2a;border-radius:var(--radius-lg);padding:2rem;width:100%;max-width:480px;margin:1rem">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+      <div style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700">Add content</div>
+      <button onclick="hideAddModal()" style="background:none;border:none;color:var(--gray3);font-size:1.3rem;cursor:pointer">×</button>
+    </div>
+    <label style="display:block;font-size:0.85rem;color:var(--gray3);margin-bottom:8px">Content type</label>
+    <div style="display:flex;gap:8px;margin-bottom:1.25rem" id="type-btns">
+      <button onclick="setType('link')" class="type-btn active-type" style="flex:1;padding:10px;background:#1a1a1a;border:1px solid var(--accent);border-radius:var(--radius);color:var(--white);font-size:0.85rem;cursor:pointer">🔗 Link</button>
+      <button onclick="setType('image')" class="type-btn" style="flex:1;padding:10px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:var(--radius);color:var(--gray3);font-size:0.85rem;cursor:pointer">🖼 Image</button>
+      <button onclick="setType('file')" class="type-btn" style="flex:1;padding:10px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:var(--radius);color:var(--gray3);font-size:0.85rem;cursor:pointer">📁 File</button>
+    </div>
+    <label style="display:block;font-size:0.85rem;color:var(--gray3);margin-bottom:6px">Title</label>
+    <input type="text" placeholder="e.g. My private Snapchat" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:var(--radius);padding:11px 14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;margin-bottom:1rem">
+    <div id="link-input">
+      <label style="display:block;font-size:0.85rem;color:var(--gray3);margin-bottom:6px">URL / Link</label>
+      <input type="url" placeholder="https://..." style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:var(--radius);padding:11px 14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;margin-bottom:1rem">
+    </div>
+    <label style="display:block;font-size:0.85rem;color:var(--gray3);margin-bottom:6px">Price (USD)</label>
+    <input type="number" placeholder="10.00" min="1" step="0.50" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:var(--radius);padding:11px 14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;margin-bottom:1rem">
+    <div style="display:flex;align-items:center;gap:10px;background:#1a1a1a;border-radius:var(--radius);padding:12px 14px;margin-bottom:1.25rem">
+      <input type="checkbox" id="adult-check" style="width:auto;margin:0;accent-color:var(--accent)">
+      <label for="adult-check" style="font-size:0.85rem;color:var(--gray3);cursor:pointer">This is 18+ adult content — I have completed verification</label>
+    </div>
+    <button class="btn btn-accent" style="width:100%;padding:12px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;border-radius:var(--radius)" onclick="hideAddModal()">Add content →</button>
+  </div>
+</div>
+
+<script>
+const wallets=[
+  {name:'Bitcoin',sym:'BTC',cls:'btc',placeholder:'bc1q...your BTC address'},
+  {name:'Ethereum',sym:'ETH',cls:'eth',placeholder:'0x...your ETH address'},
+  {name:'Solana',sym:'SOL',cls:'sol',placeholder:'Your SOL address'},
+  {name:'XRP',sym:'XRP',cls:'xrp',placeholder:'r...your XRP address'},
+  {name:'USDT (Tron)',sym:'₮',cls:'usdt',placeholder:'T...your TRC20 address'},
+];
+
+function buildWallets(){
+  const g=document.getElementById('wallet-grid');
+  g.innerHTML=wallets.map(w=>`
+    <div class="wallet-card">
+      <div class="wallet-name"><div class="crypto-dot ${w.cls}">${w.sym}</div>${w.name}</div>
+      <input class="addr-input" placeholder="${w.placeholder}" value="">
+    </div>
+  `).join('');
+}
+
+const days=['1','3','5','7','9','11','13','15','17','19','21','23','25','27','29','31'];
+const vals=[0,12,8,0,15,22,10,0,18,30,0,12,8,20,15,25];
+function buildChart(){
+  const bars=document.getElementById('chart-bars');
+  const labels=document.getElementById('chart-labels');
+  const max=Math.max(...vals)||1;
+  bars.innerHTML=vals.map((v,i)=>`<div class="bar${v===Math.max(...vals)?' accent':''}" style="height:${Math.max(4,(v/max)*100)}%" title="$${v}"></div>`).join('');
+  labels.innerHTML=days.map(d=>`<div class="bar-label" style="flex:1">${d}</div>`).join('');
+}
+
+function showTab(name){
+  document.querySelectorAll('[id^="tab-"]').forEach(el=>el.style.display='none');
+  document.getElementById('tab-'+name).style.display='block';
+  document.querySelectorAll('.sidebar-link').forEach(el=>el.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  if(name==='wallets') buildWallets();
+}
+
+function showAddModal(){document.getElementById('add-modal').style.display='flex'}
+function hideAddModal(){document.getElementById('add-modal').style.display='none'}
+
+function setType(t){
+  document.querySelectorAll('.type-btn').forEach(b=>{b.style.borderColor='#2a2a2a';b.style.color='var(--gray3)'});
+  event.currentTarget.style.borderColor='var(--accent)';event.currentTarget.style.color='var(--white)';
+}
+
+buildChart();
+</script>
+</body>
+</html>
+
+    <div class="crypto-chip"><div class="crypto-dot xrp">✕</div> XRP</div>
+    <div class="crypto-chip"><div class="crypto-dot usdt">₮</div> USDT (Tron)</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="cta-section">
+    <h2>Ready to start earning?</h2>
+    <p>Create your page in under a minute. No credit card. No ID. No banks.</p>
+    <a href="pages/register.html" class="btn btn-accent btn-lg">Create free account</a>
+  </div>
+</div>
+
+<footer>
+  <div class="logo" style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem">The<span style="color:var(--accent)">Paywall</span></div>
+  <p>© 2025 ThePaywall.co.za</p>
+  <div class="footer-links">
+    <a href="pages/terms.html">Terms</a>
+    <a href="pages/privacy.html">Privacy</a>
+    <a href="pages/compliance.html">18+ Compliance</a>
+  </div>
+</footer>
+
+</body>
+</html>
