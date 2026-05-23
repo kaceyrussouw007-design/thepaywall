@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paywall</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="paywall-header">
+    <a href="index.html" class="logo">The<span>Paywall</span></a>
+  </header>
+
+  <main class="paywall-main">
+    <section class="panel paywall-panel">
+      <h1 id="paywall-title">Loading paywall...</h1>
+      <p id="paywall-description"></p>
+      <div class="paywall-details">
+        <div><strong>Price</strong> <span id="paywall-price"></span></div>
+        <div><strong>Currency</strong> <span id="paywall-currency"></span></div>
+        <div><strong>Content URL</strong> <a id="paywall-link" target="_blank">Open after payment</a></div>
+      </div>
+
+      <div id="checkout-card" class="checkout-card hidden">
+        <h2>Pay with crypto</h2>
+        <p class="small-text">Send the exact amount to the address below.</p>
+        <label>Payment address</label>
+        <code id="payment-address"></code>
+        <label>Payment URI</label>
+        <code id="payment-uri"></code>
+        <button class="btn btn-primary" id="open-wallet">Open wallet</button>
+        <p class="small-text">Payment request expires in <span id="expires-at"></span>.</p>
+        <p class="small-text">After you complete the payment, click unlock to see the content link.</p>
+        <button class="btn btn-secondary" id="unlock-content">I paid, show content</button>
+      </div>
+
+      <div id="access-message" class="note hidden"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

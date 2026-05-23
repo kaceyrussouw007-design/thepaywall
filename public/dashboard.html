@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ThePaywall Creator Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="dashboard-header">
+    <div>
+      <a href="index.html" class="logo">The<span>Paywall</span></a>
+      <p>Create a paywall item and share it with your audience.</p>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="panel">
+      <h2>Create a new paid link</h2>
+      <form id="paywall-form">
+        <label>Title</label>
+        <input type="text" name="title" required placeholder="Exclusive content pack">
+
+        <label>Description</label>
+        <textarea name="description" rows="4" placeholder="What buyers get after payment"></textarea>
+
+        <label>Price</label>
+        <input type="number" name="price" min="0.01" step="0.01" required placeholder="10.00">
+
+        <label>Currency</label>
+        <select name="currency" required>
+          <option value="BTC">Bitcoin (BTC)</option>
+          <option value="ETH">Ethereum (ETH)</option>
+          <option value="SOL">Solana (SOL)</option>
+          <option value="XRP">XRP</option>
+          <option value="USDT">USDT</option>
+        </select>
+
+        <label>Content URL</label>
+        <input type="url" name="contentUrl" required placeholder="https://example.com/secret-file.jpg">
+
+        <button class="btn btn-primary" type="submit">Publish paywall</button>
+      </form>
+    </section>
+
+    <section class="panel" id="paywall-list-panel">
+      <h2>Your published paywalls</h2>
+      <div id="paywall-list" class="paywall-list">
+        <p class="note">No paywall items yet. Create one to see it here.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

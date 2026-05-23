@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String        @id
+  email     String        @unique
+  createdAt DateTime      @default(now())
+  items     PaywallItem[]
+}
+
+enum ItemType {
+  LINK
+  BUNDLE
+  FILE
+}
+
+model PaywallItem {
+  id          String       @id @default(uuid())
+  userId      String
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        ItemType
+  title       String
+  description String?
+  slug        String       @unique
+  priceUSD    Float
+  linkUrl     String?
+  fileUrl     String?
+  createdAt   DateTime     @default(now())
+  bundleLinks BundleLink[]
+  payments    Payment[]
+
+  @@index([userId])
+  @@index([slug])
+}
+
+model BundleLink {
+  id     String      @id @default(uuid())
+  itemId String
+  item   PaywallItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  url    String
+  label  String
+  order  Int         @default(0)
+}
+
+model Payment {
+  id             String      @id @default(uuid())
+  itemId         String
+  item           PaywallItem @relation(fields: [itemId], references: [id])
+  nowpaymentsId  String      @unique
+  status         String      @default("waiting")
+  cryptoCurrency String
+  amountCrypto   Float?
+  amountUSD      Float
+  buyerEmail     String?
+  accessToken    String      @unique @default(uuid())
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@index([accessToken])
+  @@index([itemId])
+}
